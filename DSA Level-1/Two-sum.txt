@@ -1,0 +1,26 @@
+// Two sum
+let arr = [1, 1, 2, 3, 4]; //sorted array
+//if not  arr.sort(function(a,b){return a-b})
+
+let k = 2;
+let l = 0; r = arr.length - 1;
+
+while (l < r) {
+  if (arr[l] + arr[r] == k) {
+    console.log("true");
+    return;
+  }
+  else if (arr[l] + arr[r] > k) {
+    r--;
+    // console.log(r + "r");
+  }
+  else if (arr[l] + arr[r] < k) {
+    l++;
+    // console.log(l + "l");
+  }
+}
+
+// sorting example
+let arr1 = [2, 6, 4, 3, 6];
+arr1.sort(function(a, b) { return a - b });
+console.log(arr1);
