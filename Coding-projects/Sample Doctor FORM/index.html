@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Masai Doctor Records</title>
+    <style>
+      form{
+        width:100%;
+        background-color: aqua;
+        display:grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:20px;
+      }
+
+      form input{
+        display:block; 
+        font-size: 20px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+      form input:nth-child(7){
+        background-color:rgb(97, 108, 210);
+        color:white;
+        border-width: .5px;
+        border-radius: 20px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+      }
+      table{
+        text-align: center;
+        font-size: 20px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        margin:auto;
+      }
+      thead{
+        width:60%;
+        margin:auto;
+        background-color: blue;
+        color:white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Use this form for data input  -->
+    <form>
+      <input placeholder="Name" type="text" id="name" />
+      <input placeholder="Doctor ID" type="text" id="doctor_id" />
+      <select id="specialization">
+        <option value="">Select Specialization</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Dentist">Dentist</option>
+        <option value="Gynecologist">Gynecologist</option>
+      </select>
+      <input placeholder="Experience" type="number" id="experience" />
+      <input placeholder="Email" type="email" id="email" />
+      <input placeholder="Mobile No." type="number" id="mobile" />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <!-- Use this Select tag for filter part  -->
+    <select id="filter">
+      <option value="">Select Specialization</option>
+      <option value="Dermatologist">Dermatologist</option>
+      <option value="Dentist">Dentist</option>
+      <option value="Gynecologist">Gynecologist</option>
+    </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Doctor ID</th>
+          <th>Specialization</th>
+          <th>Experience in Years</th>
+          <th>Email</th>
+          <th>Mobile No</th>
+          <th>Role</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Append Rows here using JS & DOM  -->
+      </tbody>
+    </table>
+  </body>
+  
+  <script>
+    
+    let formEl=document.querySelector("form");
+    //catch the form inputs;
+    // step-1
+    let nameEl=document.getElementById("name");
+    let doctorId=document.getElementById("doctor_id");
+    let specialization=document.getElementById("specialization");
+    let experience=document.getElementById("experience");
+    let email=document.getElementById("email");
+    let mobile=document.getElementById("mobile");
+    //step-4 catching tbody
+    let tbody=document.querySelector("tbody");
+    
+    //step-1 
+    let globalArr=[];
+    formEl.addEventListener("submit",function(event){
+      // step-2
+      event.preventDefault();
+      let obj={
+        name:nameEl.value,
+        id:doctorId.value,
+        specific:specialization.value,
+        exp:experience.value,
+        email:email.value,
+        mobile:mobile.value,
+      }
+      globalArr.push(obj);
+      console.log(globalArr);
+      tbody.innerHTML=""; //step-6 clearing the data before adds next
+      //step-5 append to tbody so that need to create tr
+      for(let i=0;i<globalArr.length;i++){
+
+        let tr=document.createElement("tr");
+      let td1=document.createElement("td");
+      let td2=document.createElement("td");
+      let td3=document.createElement("td");
+      let td4=document.createElement("td");
+      let td5=document.createElement("td");
+      let td6=document.createElement("td");
+      let td7=document.createElement("td");
+      let td8=document.createElement("button");
+      
+      
+      td1.innerText=globalArr[i].name;
+      td2.innerText=globalArr[i].id;
+      td3.innerText=globalArr[i].specific;
+      td4.innerText=globalArr[i].exp;
+      td5.innerText=globalArr[i].email;
+      td6.innerText=globalArr[i].mobile;
+//    senior, if experience > 5 years
+// Junior, if experience is between 2 and 5 years
+// Trainee, if experience is less than or equal to 1 year
+    //  console.log(typeof(td4.innerText));
+    let n=+td4.innerText;
+    if(n>5){
+      td7.innerText="Senior";
+    }
+    else if(n>=2&&n<=5){
+      td7.innerText="Junior";
+    }
+    else if(n<=1){
+      td7.innerText="Trainee";
+    }
+      td8.innerText="Delete";
+
+      tr.append(td1,td2,td3,td4,td5,td6,td7,td8);
+      tbody.append(tr);
+     console.log(tbody);
+     td8.addEventListener("click",function(){
+      deleteFunction(i);
+     })
+
+      }
+
+       
+    
+    function deleteFunction(i){
+          let deletes=formEl.filter((index)=>{
+            if(i===index){
+              return false
+            }else{
+              return true;
+            }
+          })
+          tbody(deletes);
+     }
+    })
+    
+  </script>
+</html>
